@@ -1,0 +1,243 @@
+요청하신 기능을 모두 담아 단 하나의 파일로 실행 가능한 index.html 프로토타입 코드를 작성했습니다.
+
+아래 코드 전체를 복사해서 진행해 주세요.
+
+HTML
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>씨드볼트 긴급 생존 DB</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 20px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .search-box {
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .card-latin {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .card-info {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 8px;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            background-color: #064e3b;
+            color: #6ee7b7;
+        }
+
+        .no-result {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 32px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🌱 씨드볼트 긴급 생존 DB</h1>
+            <p>오프라인 긴급 상황 대비 종자 보관 및 활용 데이터베이스</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="식물 이름 또는 학명으로 검색..." onkeyup="filterSeeds()">
+        </div>
+
+        <div class="card-list" id="cardList">
+            <!-- 감자 -->
+            <div class="card" data-name="감자 Solanum tuberosum">
+                <div class="card-header">
+                    <span class="card-title">감자</span>
+                    <span class="card-latin">Solanum tuberosum</span>
+                </div>
+                <div class="card-info">
+                    <span class="info-label">보관 위치</span>
+                    <span class="info-value">A구역 - 02번 금속 암풀</span>
+                    <span class="info-label">활용 유형</span>
+                    <span class="info-value"><span class="tag">식용</span> <span class="tag">구황작물</span></span>
+                    <span class="info-label">특이 사항</span>
+                    <span class="info-value">탄수화물 공급원. 싹에는 독성(솔라닌)이 있으므로 제거 후 섭취.</span>
+                </div>
+            </div>
+
+            <!-- 콩 -->
+            <div class="card" data-name="콩 Glycine max">
+                <div class="card-header">
+                    <span class="card-title">콩 (대두)</span>
+                    <span class="card-latin">Glycine max</span>
+                </div>
+                <div class="card-info">
+                    <span class="info-label">보관 위치</span>
+                    <span class="info-value">B구역 - 15번 저장 용기</span>
+                    <span class="info-label">활용 유형</span>
+                    <span class="info-value"><span class="tag">식용</span> <span class="tag">단백질원</span></span>
+                    <span class="info-label">특이 사항</span>
+                    <span class="info-value">고단백질 및 지방 공급원. 발아시켜 콩나물로 섭취 시 비타민 C 보충 가능.</span>
+                </div>
+            </div>
+
+            <!-- 벼 -->
+            <div class="card" data-name="벼 Oryza sativa">
+                <div class="card-header">
+                    <span class="card-title">벼</span>
+                    <span class="card-latin">Oryza sativa</span>
+                </div>
+                <div class="card-info">
+                    <span class="info-label">보관 위치</span>
+                    <span class="info-value">A구역 - 01번 진공 챔버</span>
+                    <span class="info-label">활용 유형</span>
+                    <span class="info-value"><span class="tag">주식용</span> <span class="tag">곡물</span></span>
+                    <span class="info-label">특이 사항</span>
+                    <span class="info-value">핵심 주곡 작물. 습지 재배에 적합하며 도정 과정 필요.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-result" id="noResult">
+            검색 결과가 없습니다.
+        </div>
+    </div>
+
+    <script>
+        function filterSeeds() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            const noResult = document.getElementById('noResult');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const nameData = card.getAttribute('data-name').toLowerCase();
+                if (nameData.includes(input)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResult.style.display = 'block';
+            } else {
+                noResult.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
